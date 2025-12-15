@@ -1,0 +1,69 @@
+{% load static %}
+<html>
+<head>
+<title>Get Runway Alerts</title>
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="stylesheet" href="{% static 'runway_alert_setup/css/styles.css' %}">
+</head>
+<script src="{% static 'runway_alert_setup/js/main.js' %}"></script>
+<body>
+<h1>Schiphol Airport, Amsterdam</h1>
+<h3 id="header">Set Runway Usage Alerts</h3>
+
+<p class="highlight">Please fill in the form below to get personalized notifications on your email when your preffered runway is at use.</p>
+<form style="display: flex; flex-direction: column; gap: 10px; max-width: 600px;">
+    <fieldset>
+        <legend>Runway Alert Settings</legend>
+<label for="email-input">Email ID<span class="required">*</span></label>
+<input type="email" id="email-input" placeholder="Please enter your email" required><br><br>
+<label for="runway-select">Runway<span class="required">*</span></label>
+<select id="runway-select" name="runway" required>
+  <option value="Polderbaan">Polderbaan</option>
+  <option value="Zwanenburgbaan">Zwanenburgbaan</option>
+  <option value="Buitenveldertbaan">Buitenveldertbaan</option>
+  <option value="Kaagbaan">Kaagbaan</option>
+  <option value="Aalsmeerbaan">Aalsmeerbaan</option>
+  <option value="Schiphol-oostbaan">Schiphol-oostbaan</option>
+</select><br><br>
+
+<label for="usage_type">Runway Usage<span class="required">*</span></label>
+  <input type="radio" id="landing" name="usage_type" value="Landing" required>
+  <label for="landing">Landing</label>
+  <input type="radio" id="take-off" name="usage_type" value="Take Off" required>
+  <label for="take-off">Take Off</label>
+  <input type="radio" id="any" name="usage_type" value="Any" required>
+  <label for="any">Any</label><br>
+  <br>
+
+<label for="alert-datetime">Alert start datetime<span class="required">*</span></label>
+<input type="datetime-local" id="alert-datetime" required><br>
+<small>
+  Please select alert start datetime.
+</small><br><br>
+  <div style="display: flex; align-items: center; gap: 5px;">
+  <label for="alert_type">Alert type<span class="required">*</span></label><br>
+  <input type="radio" id="onetime" name="alert_type" value="One Time" required>
+  <label for="onetime">One Time</label><br>
+  
+  <input type="radio" id="recurring" name="alert_type" value="Recurring" required>
+  <label for="recurring">Recurring</label>
+  
+  <div id="frequency-container" style="display:none;">
+  <label for="frequency-select">every</label>
+  <select id="frequency-select" name="frequency">
+    <option value="30">30 mins</option>
+    <option value="60">1 Hr</option>
+    <option value="120">2 Hrs</option>
+    <option value="360">6 Hrs</option>
+    <option value="720">12 Hrs</option>
+    <option value="1440">24 Hrs</option>
+  </select>
+</div>
+</div>
+<br>
+  
+<input type="submit" value="Submit">
+</fieldset>
+</form>
+</body>
+</html>

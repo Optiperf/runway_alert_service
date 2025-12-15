@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Schiphol Runway Status</title>
+</head>
+<body>
+<h2 style="text-align:center;">Runway Status</h2>
+<table border="1" cellpadding="5" cellspacing="0" style="border-collapse: collapse; margin: 0 auto;" align="center">
+  <tr>
+    <th>Runway Name</th>
+    <th>Activity</th>
+  </tr>
+  {% for runway in runways %}
+    <tr>
+      <td>{{ runway.name }}</td>
+      <td
+        {% if runway.activity == 'Silent' %}
+          style="color:gray;"
+        {% elif runway.activity == 'Take-off' %}
+          style="color:blue;"
+        {% elif runway.activity == 'Landing' %}
+          style="color:green;"
+        {% else %}
+          style="color:black;"
+        {% endif %}
+      >
+        {{ runway.activity }}
+      </td>
+    </tr>
+  {% endfor %}
+</table>
+<p style="text-align:center; margin-top:20px;">
+  <a href="{% url 'index' %}">Home Page</a>
+</p>
+<form method="post">
+  {% csrf_token %}
+  <button style="display:block; margin: 20px auto;" type="submit">Send Email</button>
+</form>
+<form id="refreshForm" method="get" action="{% url 'scrape_and_display' %}" style="display:inline;">
+  <select style="display:block; margin: 20px auto;" id="refreshInterval" name="interval">
+    <option value="once">Once</option>
+    <option value="5">5 mins</option>
+    <option value="15">15 mins</option>
+    <option value="30">30 mins</option>
+    <option value="60">60 mins</option>
+  </select>
+  <button style="display:block; margin: 20px auto;" type="submit">Refresh</button>
+</form>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const select = document.getElementById('refreshInterval');
+  let timer = null;
+
+  // Restore last selected interval from localStorage
+  if (localStorage.getItem('refreshInterval')) {
+    select.value = localStorage.getItem('refreshInterval');
+  }
+
+  function setRefresh() {
+    if (timer) clearTimeout(timer);
+    const val = select.value;
+    localStorage.setItem('refreshInterval', val); // Save selection
+    if (val !== 'once') {
+      timer = setTimeout(function() {
+        document.getElementById('refreshForm').submit();
+      }, parseInt(val) *  60 * 1000); // For minutes
+    }
+  }
+
+  select.addEventListener('change', function(e) {
+    e.preventDefault(); // Prevent form submit on change
+    setRefresh();
+  });
+
+  setRefresh(); // Set initial refresh if not 'once'
+});
+</script>
+</body>
+</html>

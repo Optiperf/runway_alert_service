@@ -1,0 +1,18 @@
+{% load custom_tags %}
+<h2 style="text-align:center;">Live Runway Dashboard</h2>
+<table border="1" cellpadding="5" cellspacing="0" style="border-collapse: collapse; margin: 0 auto;" align="center">
+  <tr>
+    <th>Timestamp</th>
+    {% for runway in runway_names %}
+      <th>{{ runway }}</th>
+    {% endfor %}
+  </tr>
+  {% for row in dashboard_rows %}
+    <tr>
+      <td>{{ row.timestamp|date:"d-m-Y H:i:s" }}</td>
+      {% for runway in runway_names %}
+        <td>{{ row|get_item:runway }}</td>
+      {% endfor %}
+    </tr>
+  {% endfor %}
+</table>

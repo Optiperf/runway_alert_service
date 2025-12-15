@@ -1,0 +1,7 @@
+id,datetimestamp,runway_name,status
+001,202512110931,Aalsmeerbaan,Take-off
+002,202512110931,Oostbaan,Silent
+003,202512110931,Kaagbaan,Silent
+004,202512110931,Zwanenburgbaan,Landing
+005,202512110931,Buitenveldertbaan,Silent
+006,202512110931,Polderbaan,Landing
